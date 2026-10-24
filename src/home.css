@@ -91,7 +91,6 @@
 /* Portada: la foto queda dentro del contenido, sin salirse por la derecha */
 
 .hero__photo { border-radius: var(--radius); aspect-ratio: 4 / 3; max-height: 540px; }
-.hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .hero__text { padding: clamp(24px, 4vw, 56px) 0; }
 .strip__inner { justify-content: center; }
 .strip ul { flex: 0 1 auto; gap: 0; }
@@ -99,9 +98,39 @@
 @media (max-width: 900px) { .hero__photo { border-radius: var(--radius); } }
 
 /* Portada: foto más grande, sin salirse del contenido */
-.hero__grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.25fr); }
 .hero__photo { aspect-ratio: 5 / 4; max-height: 660px; min-height: 420px; }
 @media (max-width: 900px) { .hero__photo { aspect-ratio: 4 / 3.4; min-height: 0; } }
 .hero__title { font-size: clamp(2.8rem, 4.6vw, 4.9rem); }
 .hero__title { font-size: clamp(2.6rem, 4.1vw, 4.4rem); }
 @media (min-width: 901px) { .hero__title { white-space: nowrap; } }
+
+/* ---------- Portada responsive ---------- */
+@media (min-width: 901px) {
+  .hero__grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.25fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+}
+@media (max-width: 900px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero__text { padding: 28px 0 0; max-width: 620px; }
+  .hero__title { font-size: clamp(2.6rem, 11vw, 4rem); white-space: normal; }
+  .hero__lead { max-width: none; }
+  .hero__photo { width: 100%; aspect-ratio: 4 / 3; min-height: 0; max-height: none; border-radius: 20px; }
+  .badge-card { top: auto; bottom: 14px; left: 14px; right: auto; padding: 12px 16px 12px 12px; }
+}
+@media (max-width: 560px) {
+  .hero__actions { flex-direction: column; align-items: stretch; gap: 14px; margin-top: 28px; }
+  .hero__actions .pill--lg { width: 100%; justify-content: center; }
+  .play { justify-content: center; }
+  .eyebrow { letter-spacing: .22em; }
+  .badge-card { right: 14px; }
+  .badge-card strong { font-size: 1.05rem; }
+}
+@media (max-width: 560px) {
+  .badge-card { left: 12px; right: auto; bottom: 12px; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; }
+  .badge-card__check { width: 30px; height: 30px; }
+  .badge-card small { display: none; }
+  .badge-card strong { font-size: 1rem; }
+  .numbers__item { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 4px; padding: 22px 16px; align-content: start; }
+  .numbers__item svg { grid-row: auto; margin-bottom: 4px; }
+  .numbers__item strong { font-size: 2rem; }
+  .numbers__item span { font-size: .85rem; line-height: 1.35; }
+}
