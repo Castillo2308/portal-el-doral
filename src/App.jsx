@@ -1,9 +1,12 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { BrowserRouter, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './auth.jsx';
+import { LoginProvider, useLogin } from './LoginModal.jsx';
+import { PaginaFiliales, EstadoCuenta } from './Filiales.jsx';
 import {
   ArrowRight, Check, Menu, X, Mail, MessageCircle, ClipboardList, Users, Trees, ShieldCheck, Cctv, Building2,
   TentTree, Car, Bike, Accessibility, Recycle, Trash2, VolumeX, PawPrint, DoorOpen, House, Megaphone, Plus,
-  ImageIcon, Phone, ChevronRight, BarChart3,
+  ImageIcon, Phone, ChevronRight, BarChart3, UserRound, LogOut, KeyRound,
 } from 'lucide-react';
 
 // Los gráficos solo se descargan al abrir Finanzas
@@ -24,7 +27,24 @@ const NAV = [
   ['/convivencia', 'Convivencia'],
   ['/mejoras', 'Mejoras'],
   ['/finanzas', 'Finanzas'],
+  ['/filiales', 'Filiales'],
 ];
+
+/* Botón principal de sesión: "Iniciar sesión" o, con sesión, la filial y "Cerrar sesión" */
+function SesionBoton() {
+  const { usuario, logout } = useAuth();
+  const abrirLogin = useLogin();
+  const navigate = useNavigate();
+  if (!usuario) {
+    return <button className="pill pill--line" onClick={() => abrirLogin()}><UserRound size={18} aria-hidden="true" /> Iniciar sesión</button>;
+  }
+  return (
+    <span className="session">
+      <Link className="session__me" to={`/filiales/${usuario}`}>Filial {usuario}</Link>
+      <button className="pill pill--line" onClick={() => { logout(); navigate('/filiales'); }}><LogOut size={18} aria-hidden="true" /> Cerrar sesión</button>
+    </span>
+  );
+}
 
 function Logo() {
   return (
@@ -71,7 +91,7 @@ function Header() {
           {NAV.map(([h, l]) => <NavLink key={h} to={h}>{l}</NavLink>)}
         </nav>
         <div className="top__actions">
-          <a className="pill pill--line" href={condominio.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <SesionBoton />
           <Link className="pill pill--solid" to="/contacto">Contactar</Link>
         </div>
         <button className="top__menu" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(true)}>
@@ -92,6 +112,7 @@ function Header() {
               <NavLink key={h} to={h} end={h === '/'}>{l}<ChevronRight size={18} aria-hidden="true" /></NavLink>
             ))}
           </nav>
+          <div className="sheet__session"><SesionBoton /></div>
           <div className="sheet__foot">
             <a className="pill pill--solid" href={condominio.whatsappLink} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" /> WhatsApp</a>
             <a className="pill pill--line" href={`mailto:${condominio.correo}`}><Mail size={18} aria-hidden="true" /> Correo</a>
@@ -403,6 +424,15 @@ function PaginaFinanzas() {
     </>
   );
 }
+function PaginaFilialesWrap() {
+  usePageTitle('Filiales');
+  return <><Crumbs label="Filiales" /><PaginaFiliales /></>;
+}
+function EstadoCuentaWrap() {
+  usePageTitle('Estado de cuenta');
+  return <><Crumbs label="Estado de cuenta" /><EstadoCuenta /></>;
+}
+
 function NoEncontrada() {
   usePageTitle('Página no encontrada');
   return (
@@ -423,6 +453,8 @@ function ScrollToTop() {
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+      <AuthProvider>
+      <LoginProvider>
       <ScrollToTop />
       <a className="skip" href="#contenido">Saltar al contenido</a>
       <Header />
@@ -434,10 +466,14 @@ export default function App() {
           <Route path="/mejoras" element={<PaginaMejoras />} />
           <Route path="/finanzas" element={<PaginaFinanzas />} />
           <Route path="/contacto" element={<PaginaContacto />} />
+          <Route path="/filiales" element={<PaginaFilialesWrap />} />
+          <Route path="/filiales/:id" element={<EstadoCuentaWrap />} />
           <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </main>
       <Footer />
+      </LoginProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
