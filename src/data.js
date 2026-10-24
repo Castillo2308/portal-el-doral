@@ -9,11 +9,11 @@ const img = (f) => import.meta.env.BASE_URL + 'img/' + f;
  * Sus datos para el pie de página. Mientras un campo esté vacío ('') no se muestra.
  */
 export const autor = {
-  nombre: '',
+  nombre: 'Ronny Castillo Gazel',
   cargo: '',
-  telefono: '',
-  correo: '',
-  nota: '',
+  telefono: '+506 8851-3444',
+  correo: 'roncama7@gmail.com',
+  nota: 'Diseñé y desarrollé este sitio para que cada vecino de El Doral tenga la información del condominio a un clic.',
 };
 
 /*
@@ -21,10 +21,10 @@ export const autor = {
  * Mientras sea null se muestra un espacio de diseño con el nombre de la foto.
  */
 export const fotos = {
-  portada: null, // horizontal grande: vista general, jardines o fachada
-  administracion: null, // portería, oficina o caseta
-  residentes: null, // vecinos, entrada de un bloque
-  areasComunes: null, // kiosco, jardines o zona verde
+  portada: img('entrada.webp'), // entrada y portería
+  administracion: img('vista.webp'), // vista de las áreas comunes
+  residentes: img('bloque.webp'), // fachada de un bloque
+  areasComunes: img('kiosco.webp'), // kiosco y juegos
 };
 
 export const condominio = {

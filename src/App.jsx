@@ -113,7 +113,7 @@ function Hero() {
           </div>
         </div>
         <div className="hero__media">
-          <Photo src={fotos.portada} label="Vista general del condominio" className="hero__photo" />
+          <Photo src={fotos.portada} label="Entrada y portería del Condominio El Doral" className="hero__photo" />
           <div className="badge-card">
             <span className="badge-card__check"><Check size={18} aria-hidden="true" /></span>
             <span><strong>Portería 24/7</strong><small>Acceso controlado todo el día</small></span>
