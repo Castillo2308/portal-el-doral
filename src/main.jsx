@@ -5,6 +5,7 @@ import './styles.css';
 import './pages.css';
 import './auth.css';
 import './extra.css';
+import './home.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

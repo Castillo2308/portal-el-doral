@@ -6,13 +6,15 @@ import { PaginaFiliales, EstadoCuenta } from './Filiales.jsx';
 import {
   ArrowRight, Check, Menu, X, Mail, MessageCircle, ClipboardList, Users, Trees, ShieldCheck, Cctv, Building2,
   TentTree, Car, Bike, Accessibility, Recycle, Trash2, VolumeX, PawPrint, DoorOpen, House, Megaphone, Plus,
-  ImageIcon, Phone, ChevronRight, BarChart3, UserRound, LogOut, KeyRound,
+  ImageIcon, Phone, ChevronRight, BarChart3, UserRound, LogOut, KeyRound, Play,
 } from 'lucide-react';
 
 // Los gráficos solo se descargan al abrir Finanzas
 const Finanzas = lazy(() => import('./Finanzas.jsx'));
 import { autor, fotos, condominio, pilares, instalaciones, normas } from './data.js';
 import Proyectos from './Proyectos.jsx';
+import Tour from './Tour.jsx';
+import { Cifras, AMano, EnMarcha, Galeria, TourTeaser, CuentaCTA } from './Home.jsx';
 
 const ICONS = {
   ClipboardList, Users, Trees, ShieldCheck, Cctv, Building2, TentTree, Car, Bike, Accessibility, Recycle,
@@ -29,6 +31,7 @@ const NAV = [
   ['/proyectos', 'Proyectos'],
   ['/finanzas', 'Finanzas'],
   ['/filiales', 'Filiales'],
+  ['/tour', 'Tour'],
 ];
 
 /* Botón principal de sesión: "Iniciar sesión" o, con sesión, la filial y "Cerrar sesión" */
@@ -322,6 +325,8 @@ const EXPLORA = [
   { to: '/convivencia', I: Users, t: 'Convivencia', d: 'Las normas vigentes: basura, ruido, mascotas, visitas y más.' },
   { to: '/proyectos', I: Check, t: 'Proyectos', d: 'Completados, activos, pendientes y en proceso, con fotos.' },
   { to: '/finanzas', I: BarChart3, t: 'Finanzas', d: 'Ingresos y gastos en gráficos, por rubro y mes a mes.' },
+  { to: '/filiales', I: KeyRound, t: 'Filiales', d: 'Su estado de cuenta: cuota de condominio, agua y pagos.' },
+  { to: '/tour', I: Play, t: 'Tour', d: 'Un recorrido en video por el condominio.' },
 ];
 
 function Inicio() {
@@ -329,6 +334,7 @@ function Inicio() {
   return (
     <>
       <Hero />
+      <Cifras />
       <section className="section" aria-labelledby="exp-t">
         <div className="wrap">
           <div className="split-head">
@@ -349,9 +355,19 @@ function Inicio() {
           </ul>
         </div>
       </section>
+      <AMano />
+      <EnMarcha />
+      <Galeria />
+      <TourTeaser />
+      <CuentaCTA />
       <Contacto />
     </>
   );
+}
+
+function PaginaTour() {
+  usePageTitle('Tour');
+  return <><Crumbs label="Tour" /><Tour /></>;
 }
 
 function PaginaCondominio() {
@@ -432,6 +448,7 @@ export default function App() {
           <Route path="/condominio" element={<PaginaCondominio />} />
           <Route path="/convivencia" element={<PaginaConvivencia />} />
           <Route path="/proyectos" element={<PaginaProyectos />} />
+          <Route path="/tour" element={<PaginaTour />} />
           <Route path="/mejoras" element={<Navigate to="/proyectos" replace />} />
           <Route path="/finanzas" element={<PaginaFinanzas />} />
           <Route path="/contacto" element={<PaginaContacto />} />

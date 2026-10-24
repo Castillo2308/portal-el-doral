@@ -117,3 +117,14 @@ export const finanzas = {
     { id: 'otros', nombre: 'Otros gastos', icon: 'Package', color: '#a39b94', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
   ],
 };
+
+/*
+ * TOUR EN VIDEO. Use una de las dos opciones:
+ *   youtube: enlace del video en YouTube (por ejemplo https://youtu.be/XXXXXXXXXXX)
+ *   video:   archivo MP4 guardado en public/video/, por ejemplo img('../video/tour.mp4')
+ */
+export const tour = {
+  youtube: '',
+  video: null,
+  poster: img('entrada.webp'),
+};
