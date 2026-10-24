@@ -251,7 +251,6 @@ function Contacto() {
   const canales = [
     { href: `mailto:${condominio.correo}`, I: Mail, label: 'Correo', value: condominio.correo },
     { href: condominio.whatsappLink, I: MessageCircle, label: 'WhatsApp', value: condominio.whatsapp, ext: true },
-    { href: condominio.formularioQuejas, I: ClipboardList, label: 'Quejas de ruido y convivencia', value: 'Abrir el formulario', ext: true },
   ];
   return (
     <section id="contacto" className="contact" aria-labelledby="con-t">

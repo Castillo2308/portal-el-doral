@@ -36,7 +36,6 @@ export const condominio = {
   correo: 'condominioeldoral@ciemedcr.com',
   whatsapp: '+506 8684-4010',
   whatsappLink: 'https://wa.me/50686844010',
-  formularioQuejas: 'https://docs.google.com/forms/d/18Lw_Ir3dWv-zU1p-qdQfaYjYyfTQ7v2VIbJ_F5LyCq4/viewform',
 };
 
 export const pilares = [
