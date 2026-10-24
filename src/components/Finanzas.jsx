@@ -13,7 +13,7 @@ import { mesesCalc, totalMeses, periodosCalc, consolidado, aguaCalc, aguaTotal, 
 import { Section, Callout, Stat, Tabs, DataTable, Money, colones, colonesCorto, pct } from './ui.jsx';
 
 const C = {
-  ink: '#C9452F', gold: '#F6A58F', teal: '#0E7C7B', pos: '#2F7D4F', neg: '#A3202C', water: '#2D7FA6', muted: '#9A857F', grid: '#F0DFD9',
+  ink: '#162638', gold: '#B09A6B', teal: '#2F5F6B', pos: '#3B6A4C', neg: '#9A3D2A', water: '#3D6A85', muted: '#8A7D73', grid: '#D6CEC0',
 };
 
 function ChartTip({ active, payload, label }) {
@@ -28,7 +28,7 @@ function ChartTip({ active, payload, label }) {
   );
 }
 
-const axis = { tick: { fill: '#6E5A54', fontSize: 12 }, axisLine: false, tickLine: false };
+const axis = { tick: { fill: '#5F544D', fontSize: 12 }, axisLine: false, tickLine: false };
 
 /* ---------- Pestañas ---------- */
 
@@ -43,7 +43,7 @@ function Resultados() {
             <CartesianGrid vertical={false} stroke={C.grid} />
             <XAxis dataKey="mes" {...axis} />
             <YAxis tickFormatter={colonesCorto} width={70} {...axis} />
-            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(201,69,47,.06)' }} />
+            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(22,38,56,.05)' }} />
             <Legend wrapperStyle={{ fontSize: 13 }} />
             <ReferenceLine y={0} stroke={C.ink} />
             <Bar isAnimationActive={false} dataKey="Ingresos" fill={C.ink} radius={[3, 3, 0, 0]} maxBarSize={28} />
@@ -96,7 +96,7 @@ function Ingresos() {
             <CartesianGrid vertical={false} stroke={C.grid} />
             <XAxis dataKey="mes" {...axis} />
             <YAxis tickFormatter={colonesCorto} width={70} domain={[0, 3500000]} {...axis} />
-            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(201,69,47,.06)' }} />
+            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(22,38,56,.05)' }} />
             <ReferenceLine y={PRESUPUESTO_MANTENIMIENTO} stroke={C.neg} strokeDasharray="5 4"
               label={{ value: 'Presupuesto ₡2,79 M', position: 'insideTopRight', fill: C.neg, fontSize: 12 }} />
             <Bar isAnimationActive={false} dataKey="Mantenimiento" stackId="a" fill={C.ink} maxBarSize={34} />
@@ -216,7 +216,7 @@ function Agua() {
             <CartesianGrid vertical={false} stroke={C.grid} />
             <XAxis dataKey="periodo" {...axis} interval={0} />
             <YAxis tickFormatter={colonesCorto} width={70} {...axis} />
-            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(201,69,47,.06)' }} />
+            <Tooltip content={<ChartTip />} cursor={{ fill: 'rgba(22,38,56,.05)' }} />
             <Legend wrapperStyle={{ fontSize: 13 }} />
             <Bar isAnimationActive={false} dataKey="Cobrado a filiales" stackId="a" fill={C.water} maxBarSize={56} />
             <Bar isAnimationActive={false} dataKey="Cubierto por el fondo" stackId="a" fill={C.neg} radius={[3, 3, 0, 0]} maxBarSize={56} />
@@ -353,7 +353,7 @@ function SepDic() {
 
 export default function Finanzas() {
   return (
-    <Section id="finanzas" tone="paper" title="Finanzas"
+    <Section id="finanzas" tone="paper" title="Finanzas *del condominio*"
       intro={`Período ${actualizacion.periodo}, con corte al ${actualizacion.corte}. Elaborado por CMD S.A.`}>
       <div className="fin-top">
         <details className="method">

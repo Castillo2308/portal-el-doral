@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
-  Menu, X, House, BarChart3, ScrollText, Hammer, Phone, Building2, Scale, ClipboardCheck, Mail, MessageCircle, ChevronRight,
+  Menu, X, House, BarChart3, ScrollText, Hammer, Phone, Building2, Scale, ClipboardCheck, Mail, MessageCircle, ChevronRight, ArrowRight,
 } from 'lucide-react';
 import { actualizacion, condominio } from '../data.js';
 
@@ -74,7 +74,7 @@ export default function Header() {
               ))}
             </ul>
           </nav>
-          <span className="topbar__update">Datos a {actualizacion.mes.toLowerCase()}</span>
+          <Link to="/contacto" className="topbar__update">Escríbanos <ArrowRight size={16} aria-hidden="true" /></Link>
           <button ref={toggle} className="topbar__menu" aria-expanded={open} aria-controls="menu-movil" onClick={() => setOpen(true)}>
             <Menu size={22} aria-hidden="true" />
             <span className="topbar__menu-label">Menú</span>

@@ -26,6 +26,12 @@ Sitio en React + Vite + React Router. Todo el contenido vive en **`src/data.js`*
 4. Actualizar `periodos`, `reserva`, `agua` y `cuentasPorCobrar` con las cifras del cierre.
 5. Compilar y publicar (abajo).
 
+## Fotos
+
+1. Guardar las imágenes en `public/img/` (JPG horizontal, idealmente 2000 px de ancho).
+2. En `src/data.js`, dentro de `fotos`, cambiar `null` por `img('nombre-del-archivo.jpg')`:
+   `portada` es la foto grande de la portada y `galeria` son las cinco de la página Condominio.
+
 ## Comandos
 
 ```bash

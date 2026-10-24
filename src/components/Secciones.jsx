@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, FileText, ChevronDown, Mail, MessageCircle, ClipboardList, UserRound, X, ZoomIn, ArrowUpRight } from 'lucide-react';
 import {
-  condominio, instalaciones, lineamientos, fotosTechos, gastosTechos, proyectos, casosCerrados, taller, gestion, reserva,
+  condominio, fotos, instalaciones, lineamientos, fotosTechos, gastosTechos, proyectos, casosCerrados, taller, gestion, reserva,
 } from '../data.js';
 import { mesesCalc } from '../calc.js';
 import { Section, Callout, Stat, Icon, colones, pct } from './ui.jsx';
@@ -10,8 +10,16 @@ import { Section, Callout, Stat, Icon, colones, pct } from './ui.jsx';
 
 export function Condominio() {
   return (
-    <Section id="condominio" title="Nuestro condominio"
+    <Section id="condominio" title="Nuestro *condominio*"
       intro={`${condominio.filiales} fincas filiales de uso habitacional en ${condominio.bloques} bloques. ${condominio.ubicacion}.`}>
+      <ul className="gallery" aria-label="Fotos del condominio">
+        {fotos.galeria.map((f) => (
+          <li key={f.titulo} className={f.src ? 'gallery__item' : 'gallery__item gallery__item--empty'}>
+            {f.src ? <img src={f.src} alt={f.titulo} loading="lazy" /> : <span className="gallery__ph" aria-hidden="true"><Icon name="Building2" size={28} /></span>}
+            <span className="gallery__cap">{f.titulo}</span>
+          </li>
+        ))}
+      </ul>
       <ul className="amenities">
         {instalaciones.map((x) => (
           <li key={x.titulo}>
@@ -97,7 +105,7 @@ export function Lineamientos() {
   }, [q]);
 
   return (
-    <Section id="lineamientos" title="Lineamientos"
+    <Section id="lineamientos" title="Lineamientos *vigentes*"
       intro="Normas de convivencia y protocolos vigentes, elaborados por la Administración. Aquí está el resumen de cada uno; el documento completo se solicita por correo con un clic.">
       <div className="search">
         <Search size={18} aria-hidden="true" />
@@ -163,7 +171,7 @@ export function Proyectos() {
   const lista = filtro === 'todos' ? proyectos : proyectos.filter((p) => p.estado === filtro);
 
   return (
-    <Section id="proyectos" tone="paper" title="Proyectos"
+    <Section id="proyectos" tone="paper" title="Proyectos *y obras*"
       intro="Obras ejecutadas por la Administración en infraestructura, seguridad y bienestar del condominio.">
       <article className="feature">
         <div className="feature__head">
@@ -255,7 +263,7 @@ export function Proyectos() {
 export function Legal() {
   const [abierto, setAbierto] = useState(null);
   return (
-    <Section id="legal" title="Gestión legal"
+    <Section id="legal" title="Gestión *legal*"
       intro={`Asesorías y gestiones en defensa de los derechos del condominio, con asesoría legal profesional.`}>
       <div className="case">
         <div className="case__head">
@@ -306,7 +314,7 @@ export function Legal() {
 
 export function Gestion() {
   return (
-    <Section id="gestion" tone="paper" title="Qué hace la Administración cada mes"
+    <Section id="gestion" tone="paper" title="La Administración, *cada mes*"
       intro="Tareas que CMD S.A. ejecuta de forma continua para todos los propietarios y residentes.">
       <ul className="duties">
         {gestion.map((g) => (
@@ -324,7 +332,7 @@ export function Gestion() {
 
 export function Contacto() {
   return (
-    <Section id="contacto" tone="paper" title="Contacto y canales oficiales"
+    <Section id="contacto" tone="paper" title="Contacto *oficial*"
       intro="Use solo estos canales: así cada solicitud queda registrada y con seguimiento.">
       <ul className="channels">
         <li>

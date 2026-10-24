@@ -17,6 +17,23 @@ export const actualizacion = {
  * número de filial, sin nombres de propietarios (Ley 8968).
  */
 
+/*
+ * Fotos del condominio. Guardar cada imagen en public/img/ y poner aquí su nombre,
+ * por ejemplo: portada: img('portada.jpg'). Mientras sea null se muestra un espacio de diseño.
+ */
+const img = (f) => import.meta.env.BASE_URL + 'img/' + f;
+export const fotos = {
+  portada: null, // p. ej. img('portada.jpg'): foto horizontal grande para la portada (fachada, entrada o vista general)
+  galeria: [
+    { src: null, titulo: 'Entrada y portería' },
+    { src: null, titulo: 'Áreas verdes' },
+    { src: null, titulo: 'Kiosco comunal' },
+    { src: null, titulo: 'Parqueos' },
+    { src: null, titulo: 'Bloques de filiales' },
+  ],
+};
+
+
 export const condominio = {
   nombre: 'Condominio Residencial El Doral',
   ubicacion: 'Zapote, San José, Costa Rica',

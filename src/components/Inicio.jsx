@@ -42,7 +42,8 @@ export default function Inicio() {
 
       <section className="section" aria-labelledby="explorar-t">
         <div className="wrap">
-          <h2 id="explorar-t" className="section__title">¿Qué quiere consultar?</h2>
+          <p className="eyebrow">El portal</p>
+          <h2 id="explorar-t" className="section__title">¿Qué quiere <em>consultar?</em></h2>
           <ul className="pages">
             {PAGINAS.map(({ to, I, titulo, dato, datoNota, texto }) => (
               <li key={to}>
@@ -64,7 +65,8 @@ export default function Inicio() {
       <section className="section section--paper" aria-labelledby="nov-t">
         <div className="wrap news">
           <div>
-            <h2 id="nov-t" className="section__title">Lo nuevo en {actualizacion.mes.toLowerCase()}</h2>
+            <p className="eyebrow">Novedades</p>
+            <h2 id="nov-t" className="section__title">Lo nuevo <em>en {actualizacion.mes.toLowerCase()}.</em></h2>
             <p className="section__intro">El portal se actualiza cada mes con el cierre contable.</p>
             <Link to="/finanzas" className="btn btn--line news__btn">Ver el informe completo <ArrowRight size={18} aria-hidden="true" /></Link>
           </div>
@@ -79,7 +81,8 @@ export default function Inicio() {
       <section className="section section--ink" aria-labelledby="ct-t">
         <div className="wrap cta">
           <div>
-            <h2 id="ct-t" className="section__title">¿Tiene una consulta o una queja?</h2>
+            <p className="eyebrow eyebrow--light">Canales oficiales</p>
+            <h2 id="ct-t" className="section__title">¿Tiene una consulta <em>o una queja?</em></h2>
             <p className="section__intro">Escriba por los canales oficiales para que quede registrada y tenga seguimiento.</p>
           </div>
           <div className="cta__actions">

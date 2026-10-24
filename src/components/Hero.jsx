@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { mesesCalc, consolidado } from '../calc.js';
-import { reserva, actualizacion, condominio, cuentasPorCobrar } from '../data.js';
+import { reserva, actualizacion, condominio, cuentasPorCobrar, fotos } from '../data.js';
 import { colones, colonesCorto, pct } from './ui.jsx';
 
 function ResultChart() {
@@ -43,20 +44,10 @@ function ResultChart() {
           return (
             <g key={m.id} className={neg ? 'hc-bar hc-bar--neg' : 'hc-bar'}>
               <rect
-                x={cx - bw / 2}
-                y={y}
-                width={bw}
-                height={h}
-                rx="3"
-                style={{
-                  transform: grown ? 'scaleY(1)' : 'scaleY(0)',
-                  transformOrigin: `${cx}px ${y0}px`,
-                  transitionDelay: `${i * 70}ms`,
-                }}
+                x={cx - bw / 2} y={y} width={bw} height={h} rx="1"
+                style={{ transform: grown ? 'scaleY(1)' : 'scaleY(0)', transformOrigin: `${cx}px ${y0}px`, transitionDelay: `${i * 70}ms` }}
               />
-              <text x={cx} y={neg ? y + h + 18 : y - 9} className="hc-val" textAnchor="middle">
-                {colonesCorto(m.resultado)}
-              </text>
+              <text x={cx} y={neg ? y + h + 18 : y - 9} className="hc-val" textAnchor="middle">{colonesCorto(m.resultado)}</text>
               <text x={cx} y={neg ? y0 - 10 : y0 + 22} className="hc-month" textAnchor="middle">{m.corto}</text>
             </g>
           );
@@ -70,41 +61,62 @@ function ResultChart() {
   );
 }
 
+const PILARES = [
+  ['/finanzas', 'Finanzas'], ['/lineamientos', 'Lineamientos'], ['/proyectos', 'Proyectos'],
+  ['/legal', 'Gestión legal'], ['/condominio', 'Condominio'], ['/contacto', 'Contacto'],
+];
+
 export default function Hero() {
   const facts = [
-    { v: condominio.filiales, l: 'filiales en 3 bloques' },
-    { v: pct(cuentasPorCobrar.recaudacionMes), l: 'de lo facturado en julio, cobrado' },
-    { v: colones(reserva.total), l: 'en el fondo de reserva' },
-    { v: '7', l: 'lineamientos vigentes' },
+    { v: condominio.filiales, l: 'Filiales en 3 bloques' },
+    { v: pct(cuentasPorCobrar.recaudacionMes), l: 'De lo facturado en julio, cobrado' },
+    { v: colones(reserva.total), l: 'En el fondo de reserva' },
+    { v: colones(consolidado.utilidad), l: 'Utilidad Sep 2025 – Jul 2026' },
   ];
   return (
-    <section id="inicio" className="hero" aria-labelledby="hero-t">
-      <div className="wrap hero__grid">
-        <div className="hero__text">
-          <p className="hero__kicker">Informe de gestión, {actualizacion.mes.toLowerCase()}</p>
-          <h1 id="hero-t" className="hero__title">¿Alcanza la cuota de mantenimiento?</h1>
-          <p className="hero__lead">
-            <strong>Sí.</strong> De setiembre 2025 a julio 2026 el condominio recibió {colones(consolidado.ingresos)} en
-            ingresos operativos y gastó {colones(consolidado.egresos)}. Quedó una utilidad de{' '}
-            <strong>{colones(consolidado.utilidad)}</strong>.
+    <>
+      <section id="inicio" className={`cover${fotos.portada ? ' cover--photo' : ''}`} aria-labelledby="hero-t"
+        style={fotos.portada ? { '--cover-img': `url(${fotos.portada})` } : undefined}>
+        <div className="cover__veil" aria-hidden="true" />
+        <div className="wrap cover__inner">
+          <p className="eyebrow eyebrow--light">Informe de gestión · {actualizacion.mes}</p>
+          <h1 id="hero-t" className="cover__title">
+            ¿Alcanza la cuota?<br /><em>Sí, y con utilidad.</em>
+          </h1>
+          <p className="cover__lead">
+            Finanzas, normas y proyectos de El Doral,<br /><em>en claro y cada mes.</em>
           </p>
-          <div className="hero__actions">
-            <Link className="btn btn--gold" to="/finanzas">Ver las finanzas</Link>
-            <Link className="btn btn--ghost" to="/contacto">Contactar a la Administración</Link>
-          </div>
+          <nav aria-label="Secciones del portal" className="cover__pillars">
+            {PILARES.map(([to, l]) => <Link key={to} to={to}>{l}</Link>)}
+          </nav>
         </div>
-        <ResultChart />
-      </div>
-      <div className="wrap">
-        <dl className="hero__facts">
-          {facts.map((f) => (
-            <div key={f.l}>
-              <dt>{f.l}</dt>
-              <dd>{f.v}</dd>
+      </section>
+
+      <section className="hero" aria-labelledby="hero-res-t">
+        <div className="wrap hero__grid">
+          <div className="hero__text">
+            <p className="eyebrow">Resultado operativo</p>
+            <h2 id="hero-res-t" className="hero__title">La cuota sostiene <em>la operación.</em></h2>
+            <p className="hero__lead">
+              De setiembre 2025 a julio 2026 el condominio recibió {colones(consolidado.ingresos)} en
+              ingresos operativos y gastó {colones(consolidado.egresos)}. Quedó una utilidad de{' '}
+              <strong>{colones(consolidado.utilidad)}</strong>.
+            </p>
+            <div className="hero__actions">
+              <Link className="btn btn--gold" to="/finanzas">Ver las finanzas <ArrowRight size={18} aria-hidden="true" /></Link>
+              <Link className="btn btn--ghost" to="/contacto">Contactar a la Administración</Link>
             </div>
-          ))}
-        </dl>
-      </div>
-    </section>
+          </div>
+          <ResultChart />
+        </div>
+        <div className="wrap">
+          <dl className="hero__facts">
+            {facts.map((f) => (
+              <div key={f.l}><dt>{f.l}</dt><dd>{f.v}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    </>
   );
 }

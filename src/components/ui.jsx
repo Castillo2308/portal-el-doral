@@ -35,9 +35,15 @@ export function Money({ value, signed = false, tone }) {
 }
 
 /* Cada sección del portal es una página: encabezado con ruta de navegación + contenido */
+/* "Gestión *legal*" → Gestión <em>legal</em> (la parte entre asteriscos va en cursiva) */
+export function Rich({ text }) {
+  return text.split(/(\*[^*]+\*)/).map((p, i) => (p.startsWith('*') ? <em key={i}>{p.slice(1, -1)}</em> : p));
+}
+const plain = (t) => t.replace(/\*/g, '');
+
 export function Section({ id, title, intro, children, tone }) {
   useEffect(() => {
-    document.title = `${title} — Condominio Residencial El Doral`;
+    document.title = `${plain(title)} — Condominio Residencial El Doral`;
   }, [title]);
   return (
     <>
@@ -46,9 +52,9 @@ export function Section({ id, title, intro, children, tone }) {
           <nav aria-label="Ruta de navegación" className="crumbs">
             <Link to="/">Inicio</Link>
             <span aria-hidden="true">/</span>
-            <span aria-current="page">{title}</span>
+            <span aria-current="page">{plain(title)}</span>
           </nav>
-          <h1 id={`${id}-t`} className="page-head__title">{title}</h1>
+          <h1 id={`${id}-t`} className="page-head__title"><Rich text={title} /></h1>
           {intro && <p className="page-head__intro">{intro}</p>}
         </div>
       </header>
