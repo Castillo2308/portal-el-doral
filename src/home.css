@@ -87,3 +87,13 @@
 .tour__veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(35,22,15,.15), rgba(35,22,15,.75)); }
 .tour__empty p { position: relative; font-size: 1.05rem; }
 @media (max-width: 560px) { .teaser { min-height: 340px; } .teaser__play { top: 38%; width: 68px; height: 68px; } }
+
+/* Portada: la foto queda dentro del contenido, sin salirse por la derecha */
+
+.hero__photo { border-radius: var(--radius); aspect-ratio: 4 / 3; max-height: 540px; }
+.hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero__text { padding: clamp(24px, 4vw, 56px) 0; }
+.strip__inner { justify-content: center; }
+.strip ul { flex: 0 1 auto; gap: 0; }
+
+@media (max-width: 900px) { .hero__photo { border-radius: var(--radius); } }

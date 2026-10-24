@@ -103,8 +103,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .play { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); font-size: 1rem; }
 .play__ring { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); display: grid; place-items: center; color: var(--ink); transition: border-color .2s; }
 .play:hover .play__ring { border-color: var(--coral); color: var(--coral); }
-.hero__media { position: relative; margin-right: calc(var(--gutter) * -1); }
-@media (min-width: 1240px) { .hero__media { margin-right: calc((100vw - var(--wrap)) / -2 - var(--gutter)); } }
+.hero__media { position: relative; }
 .hero__photo { width: 100%; aspect-ratio: 4 / 3; max-height: 560px; border-radius: var(--radius) 0 0 var(--radius); object-fit: cover; }
 .badge-card { position: absolute; top: 28px; right: clamp(16px, 3vw, 40px); display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.94); backdrop-filter: blur(8px); padding: 16px 22px 16px 16px; border-radius: 16px; box-shadow: 0 14px 40px rgba(35,22,15,.14); }
 .badge-card__check { width: 40px; height: 40px; border-radius: 50%; background: var(--coral-d); color: #fff; display: grid; place-items: center; flex: none; }
