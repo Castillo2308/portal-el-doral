@@ -18,7 +18,7 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const ITER = 310000;
 const FILIALES = [];
-for (let n = 1; n <= 30; n++) for (const l of ['A', 'B']) FILIALES.push(`${n}${l}`);
+for (let n = 1; n <= 31; n++) for (const l of ['A', 'B']) FILIALES.push(`${n}${l}`);
 
 const priv = new URL('../cuentas-privadas/', import.meta.url);
 const out = new URL('../public/cuentas/', import.meta.url);
@@ -35,14 +35,21 @@ if (existsSync(csv)) {
 const estadosFile = new URL('estados.json', priv);
 const estados = existsSync(estadosFile) ? JSON.parse(readFileSync(estadosFile, 'utf8')) : {};
 
+const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
 const plantilla = (id) => ({
   filial: id,
   corte: null,
   estado: 'Al día',
-  saldo: 0,
-  cuotaMensual: 0,
   ultimoPago: null,
-  pendientes: [],
+  // Cuota de condominio (mantenimiento)
+  cuota: { mensual: 0, pendiente: 0, mesesPendientes: 0 },
+  // Agua: consumo individual medido
+  agua: { lecturaAnterior: 0, lecturaActual: 0, consumoM3: 0, monto: 0, pendiente: 0 },
+  // Otros cargos
+  extraordinarias: { monto: 0, pendiente: 0, detalle: '' },
+  multas: { monto: 0, pendiente: 0, detalle: '' },
+  // Historial mes a mes del año en curso
+  historial: MESES.map((mes) => ({ mes, cuota: 0, agua: 0, consumoM3: 0, otros: 0, pagado: 0 })),
   movimientos: [],
   demo: true,
 });

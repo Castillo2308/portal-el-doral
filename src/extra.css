@@ -1,0 +1,58 @@
+/* ---------- Estado de cuenta: tarjetas de cargos ---------- */
+.cargos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.cargo { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; }
+.cargo__icon { width: 42px; height: 42px; border-radius: 50%; background: var(--coral-t); color: var(--coral-d); display: grid; place-items: center; }
+.cargo--water .cargo__icon { background: #e3eff5; color: #2f6f92; }
+.cargo h2 { font-family: var(--serif); font-weight: 500; font-size: 1.35rem; color: var(--ink); margin: 14px 0 12px; letter-spacing: -.015em; }
+.cargo dl { margin: 0; display: grid; gap: 8px; flex: 1; }
+.cargo dl > div { display: flex; justify-content: space-between; gap: 12px; font-size: .93rem; }
+.cargo dt { color: var(--muted); }
+.cargo dd { margin: 0; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; text-align: right; }
+.cargo .cargo__due { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); font-size: 1rem; }
+.cargo .cargo__due dt { color: var(--ink); font-weight: 500; }
+.cargo .cargo__due dd { color: var(--coral-dd); font-weight: 600; }
+@media (max-width: 1000px) { .cargos { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .cargos { grid-template-columns: 1fr; } }
+
+/* ---------- Proyectos ---------- */
+.status-tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: clamp(36px, 5vw, 56px); }
+.status-tile { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px 20px; border-radius: 18px; border: 1.5px solid var(--line); background: var(--card); text-align: left; transition: border-color .2s, background-color .2s, transform .12s ease-out; }
+.status-tile:hover { border-color: var(--coral-d); }
+.status-tile:active { transform: scale(.98); }
+.status-tile svg { position: absolute; top: 18px; right: 18px; color: var(--muted); }
+.status-tile__n { font-family: var(--serif); font-weight: 500; font-size: 2.4rem; line-height: 1; color: var(--ink); }
+.status-tile__l { color: var(--muted); font-size: .95rem; }
+.status-tile[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
+.status-tile[aria-pressed="true"] .status-tile__n, .status-tile[aria-pressed="true"] .status-tile__l, .status-tile[aria-pressed="true"] svg { color: #fff; }
+.status-tile--activo[aria-pressed="true"] { background: var(--coral-d); border-color: var(--coral-d); }
+@media (max-width: 900px) { .status-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .status-tiles { grid-template-columns: 1fr 1fr; } .status-tile--all { grid-column: 1 / -1; } }
+
+.pgroup { margin-top: clamp(36px, 5vw, 56px); }
+.pgroup:first-of-type { margin-top: 0; }
+.pgroup__head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.pgroup__head h2 { display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 3vw, 2.2rem); color: var(--ink); letter-spacing: -.02em; }
+.pgroup__head p { color: var(--muted); }
+.pdot { width: 12px; height: 12px; border-radius: 50%; }
+.pdot--activo { background: var(--coral-d); }
+.pdot--procesando { background: #c98a1b; }
+.pdot--pendiente { background: #8a7f76; }
+.pdot--completado { background: var(--ok); }
+
+.pcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pcard { background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+.pcard--wide { grid-column: span 2; flex-direction: row; }
+.pcard__photos { flex: 1.2; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; min-height: 240px; }
+.pcard__photos figure { position: relative; margin: 0; }
+.pcard__photos img { width: 100%; height: 100%; object-fit: cover; }
+.pcard__photos figcaption { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,.94); color: var(--ink); border-radius: 999px; padding: 4px 12px; font-size: .8rem; font-weight: 500; }
+.pcard__body { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+.pcard h3 { font-family: var(--serif); font-weight: 500; font-size: 1.45rem; color: var(--ink); letter-spacing: -.015em; line-height: 1.15; }
+.pcard p { color: var(--muted); font-size: .95rem; }
+.pcard .pcard__date { margin-top: auto; padding-top: 10px; color: var(--ink); font-size: .88rem; font-weight: 500; }
+.tag--activo { background: var(--coral-t); color: var(--coral-dd); }
+.tag--procesando { background: #fbefd9; color: #8a5a0b; }
+.tag--pendiente { background: #efe9df; color: #5f564f; }
+.tag--completado { background: #e5efe7; color: var(--ok); }
+@media (max-width: 1000px) { .pcards { grid-template-columns: 1fr 1fr; } .pcard--wide { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .pcards { grid-template-columns: 1fr; } .pcard--wide { flex-direction: column; } .pcard__photos { min-height: 200px; } }

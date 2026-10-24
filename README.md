@@ -1,6 +1,6 @@
 # El Doral — Condominio Residencial
 
-Sitio en React + Vite con varias páginas: Inicio, El condominio, Convivencia, Mejoras, Finanzas y Contacto.
+Sitio en React + Vite con varias páginas: Inicio, El condominio, Convivencia, Proyectos, Finanzas, Filiales y Contacto.
 Todo el contenido se edita en **`src/data.js`**.
 
 ## Finanzas
@@ -14,7 +14,9 @@ Cada `git push` a `main` lo vuelve a publicar solo (`.github/workflows/deploy.ym
 
 ## Filiales y estados de cuenta
 
-- `/filiales` muestra las 60 filiales (1A a 30B). Cada cuenta solo puede abrir su propia filial.
+- `/filiales` muestra las 62 filiales (1A a 31B). Cada cuenta solo puede abrir su propia filial.
+- El estado de cuenta incluye cuota de condominio, agua (lecturas, consumo y monto), cuotas extraordinarias,
+  multas y mora, consumo de agua mes a mes, historial del año y movimientos.
 - Cada estado de cuenta se publica **cifrado** (AES-256-GCM, clave derivada de la contraseña con PBKDF2-SHA256
   y sal única) en `public/cuentas/<FILIAL>.json`. Sin la contraseña de esa filial el archivo no se puede leer,
   aunque se descargue directamente. Las contraseñas no se guardan en ningún archivo.
@@ -25,8 +27,18 @@ Cada `git push` a `main` lo vuelve a publicar solo (`.github/workflows/deploy.ym
 
 1. Cree la carpeta `cuentas-privadas/` (está en `.gitignore`, nunca se sube a GitHub).
 2. `cuentas-privadas/claves.csv`: una línea por filial, `1A,UnaClaveLargaYUnica`.
-3. `cuentas-privadas/estados.json` (opcional): `{ "1A": { "saldo": 45000, "estado": "Pendiente", "cuotaMensual": 45000,
-   "ultimoPago": "15/07/2026", "corte": "31 de julio 2026", "movimientos": [{ "fecha": "15/07", "concepto": "Cuota julio", "pago": 45000 }], "demo": false } }`
+3. `cuentas-privadas/estados.json` (opcional), por filial:
+   ```json
+   { "1A": {
+       "estado": "Pendiente", "corte": "31 de julio 2026", "ultimoPago": "15/07/2026", "demo": false,
+       "cuota": { "mensual": 45000, "pendiente": 45000, "mesesPendientes": 1 },
+       "agua": { "lecturaAnterior": 120, "lecturaActual": 132, "consumoM3": 12, "monto": 17875, "pendiente": 0 },
+       "extraordinarias": { "monto": 0, "pendiente": 0, "detalle": "" },
+       "multas": { "monto": 0, "pendiente": 0, "detalle": "" },
+       "historial": [{ "mes": "Ene", "cuota": 45000, "agua": 15000, "consumoM3": 10, "otros": 0, "pagado": 60000 }],
+       "movimientos": [{ "fecha": "15/07", "concepto": "Pago cuota julio", "pago": 45000 }]
+   } }
+   ```
 4. Ejecute `node scripts/cuentas.mjs`, luego haga commit y push de `public/cuentas/`.
 5. Entregue cada contraseña a su propietario por un canal privado.
 
@@ -49,3 +61,8 @@ npm install
 npm run dev
 npm run build
 ```
+
+## Proyectos
+
+En `src/data.js`, `proyectos` tiene cada proyecto con `estado`: `completado`, `activo`, `pendiente` o `procesando`
+(en cotización, revisión o aprobación). La página `/proyectos` los agrupa y filtra por estado.

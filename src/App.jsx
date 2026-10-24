@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { BrowserRouter, Routes, Route, Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './auth.jsx';
 import { LoginProvider, useLogin } from './LoginModal.jsx';
 import { PaginaFiliales, EstadoCuenta } from './Filiales.jsx';
@@ -11,7 +11,8 @@ import {
 
 // Los gráficos solo se descargan al abrir Finanzas
 const Finanzas = lazy(() => import('./Finanzas.jsx'));
-import { autor, fotos, condominio, pilares, instalaciones, normas, mejoras, fotosTechos } from './data.js';
+import { autor, fotos, condominio, pilares, instalaciones, normas } from './data.js';
+import Proyectos from './Proyectos.jsx';
 
 const ICONS = {
   ClipboardList, Users, Trees, ShieldCheck, Cctv, Building2, TentTree, Car, Bike, Accessibility, Recycle,
@@ -25,7 +26,7 @@ const Icon = ({ name, size = 22 }) => {
 const NAV = [
   ['/condominio', 'El condominio'],
   ['/convivencia', 'Convivencia'],
-  ['/mejoras', 'Mejoras'],
+  ['/proyectos', 'Proyectos'],
   ['/finanzas', 'Finanzas'],
   ['/filiales', 'Filiales'],
 ];
@@ -130,7 +131,7 @@ function Hero() {
         <div className="hero__text">
           <p className="eyebrow">Vivir mejor, juntos</p>
           <h1 id="hero-t" className="hero__title">Tu hogar,<br />en <em>comunidad.</em></h1>
-          <p className="hero__lead">Normas, mejoras y canales oficiales de El Doral, en un solo lugar.</p>
+          <p className="hero__lead">Normas, proyectos y canales oficiales de El Doral, en un solo lugar.</p>
           <div className="hero__actions">
             <Link className="pill pill--solid pill--lg" to="/condominio">Conoce El Doral <ArrowRight size={18} aria-hidden="true" /></Link>
             <Link className="play" to="/convivencia">
@@ -241,39 +242,6 @@ function Normas({ level: H = 'h2' }) {
   );
 }
 
-function Mejoras({ level: H = 'h2' }) {
-  return (
-    <section id="mejoras" className="section section--soft" aria-labelledby="mej-t">
-      <div className="wrap">
-        <div className="split-head">
-          <div>
-            <p className="eyebrow">Mejoras</p>
-            <H id="mej-t" className="title">Un condominio <em>que se cuida.</em></H>
-          </div>
-          <p className="split-head__text">Obras terminadas y en curso para mantener la infraestructura, la seguridad y el aspecto de El Doral.</p>
-        </div>
-        <div className="beforeafter">
-          {fotosTechos.map((f) => (
-            <figure key={f.etiqueta}>
-              <img src={f.src} alt={`Techos: ${f.etiqueta.toLowerCase()}`} loading="lazy" />
-              <figcaption>{f.etiqueta}</figcaption>
-            </figure>
-          ))}
-        </div>
-        <ul className="works">
-          {mejoras.map((m) => (
-            <li key={m.titulo}>
-              <span className={`tag tag--${m.estado === 'Listo' ? 'done' : m.estado === 'En curso' ? 'now' : 'next'}`}>{m.estado}</span>
-              <h3>{m.titulo}</h3>
-              <p>{m.texto}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
 function Contacto({ level: H = 'h2' }) {
   const canales = [
     { href: `mailto:${condominio.correo}`, I: Mail, label: 'Correo', value: condominio.correo },
@@ -352,7 +320,7 @@ function Crumbs({ label }) {
 const EXPLORA = [
   { to: '/condominio', I: Building2, t: 'El condominio', d: 'Administración, residentes, áreas comunes e instalaciones.' },
   { to: '/convivencia', I: Users, t: 'Convivencia', d: 'Las normas vigentes: basura, ruido, mascotas, visitas y más.' },
-  { to: '/mejoras', I: Check, t: 'Mejoras', d: 'Obras terminadas y en curso, con fotos del antes y después.' },
+  { to: '/proyectos', I: Check, t: 'Proyectos', d: 'Completados, activos, pendientes y en proceso, con fotos.' },
   { to: '/finanzas', I: BarChart3, t: 'Finanzas', d: 'Ingresos y gastos en gráficos, por rubro y mes a mes.' },
 ];
 
@@ -394,9 +362,9 @@ function PaginaConvivencia() {
   usePageTitle('Convivencia');
   return <><Crumbs label="Convivencia" /><Normas level="h1" /></>;
 }
-function PaginaMejoras() {
-  usePageTitle('Mejoras');
-  return <><Crumbs label="Mejoras" /><Mejoras level="h1" /></>;
+function PaginaProyectos() {
+  usePageTitle('Proyectos');
+  return <><Crumbs label="Proyectos" /><Proyectos /></>;
 }
 function PaginaContacto() {
   usePageTitle('Contacto');
@@ -463,7 +431,8 @@ export default function App() {
           <Route path="/" element={<Inicio />} />
           <Route path="/condominio" element={<PaginaCondominio />} />
           <Route path="/convivencia" element={<PaginaConvivencia />} />
-          <Route path="/mejoras" element={<PaginaMejoras />} />
+          <Route path="/proyectos" element={<PaginaProyectos />} />
+          <Route path="/mejoras" element={<Navigate to="/proyectos" replace />} />
           <Route path="/finanzas" element={<PaginaFinanzas />} />
           <Route path="/contacto" element={<PaginaContacto />} />
           <Route path="/filiales" element={<PaginaFilialesWrap />} />

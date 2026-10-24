@@ -65,13 +65,26 @@ export const normas = [
   { icon: 'Megaphone', titulo: 'Comunicación oficial', resumen: 'Los canales oficiales son el correo y el WhatsApp de la Administración.', puntos: ['Un comunicado por correo se considera notificado.', 'Mantenga su correo actualizado.'] },
 ];
 
-export const mejoras = [
-  { estado: 'En curso', titulo: 'Pintura y reparación de techos', texto: 'Láminas nuevas, tornillos, reparación de fugas y pintura anticorrosiva en todo el condominio.' },
-  { estado: 'Próximo', titulo: 'Aleros y aceras', texto: 'Reparación y pintura de aleros, y pintura de todas las aceras para más seguridad y visibilidad.' },
-  { estado: 'Listo', titulo: 'Asfaltado', texto: 'Asfalto nuevo, demarcación completa, 27 topes y espacios para motos y personas con discapacidad.' },
-  { estado: 'Listo', titulo: 'Cámaras de seguridad', texto: 'Cámaras IP con visión nocturna, monitoreo desde portería y desde la app de la Administración.' },
-  { estado: 'Listo', titulo: 'Pintura y embellecimiento', texto: 'Muro divisor, entradas del primer piso, rejillas, bordes de caño y parqueos demarcados.' },
-  { estado: 'Listo', titulo: 'Verjas y portones', texto: 'Soldadura y pintura anticorrosiva en verjas, baranda de la caseta y portones de acceso.' },
+/*
+ * PROYECTOS — estado: 'completado' | 'activo' | 'pendiente' | 'procesando'
+ *   completado  terminado
+ *   activo      en ejecución
+ *   pendiente   aprobado o planificado, todavía sin iniciar
+ *   procesando  en cotización, revisión o aprobación
+ */
+export const proyectos = [
+  { estado: 'activo', titulo: 'Pintura y reparación de techos', fecha: '2025 – 2026', texto: 'Láminas nuevas, tornillos, reparación de fugas y pintura anticorrosiva en todo el condominio.', fotos: true },
+  { estado: 'activo', titulo: 'Jardinería y fumigación', fecha: 'Desde oct. 2024', texto: 'Corte, poda, fumigación y siembra cada mes en todas las áreas verdes.' },
+  { estado: 'activo', titulo: 'Mantenimiento de instalaciones', fecha: 'Continuo', texto: 'Canoas, filtraciones, gradas metálicas, barandas y portones.' },
+  { estado: 'procesando', titulo: 'Individualización de medidores de agua', fecha: 'En revisión', texto: 'Preparación para que cada filial tenga su propio medidor; se repararon fugas y se reguló la presión del medidor principal.' },
+  { estado: 'pendiente', titulo: 'Finalización de la pintura de techos', fecha: '2026', texto: 'Terminar el pintado en los tres bloques con revisión final del sellado anticorrosivo.' },
+  { estado: 'pendiente', titulo: 'Pintura y arreglo de aleros', fecha: '2026', texto: 'Reparación y pintura de los aleros de todo el condominio.' },
+  { estado: 'pendiente', titulo: 'Pintura de aceras', fecha: '2026', texto: 'Pintura de todas las aceras para más seguridad y visibilidad.' },
+  { estado: 'completado', titulo: 'Asfaltado', fecha: 'Enero 2025', texto: 'Asfalto nuevo, demarcación completa, 27 topes y espacios para motos y personas con discapacidad.' },
+  { estado: 'completado', titulo: 'Cámaras de seguridad', fecha: 'Mayo 2025', texto: 'Cámaras IP con visión nocturna, monitoreo desde portería y desde la app de la Administración.' },
+  { estado: 'completado', titulo: 'Pintura y embellecimiento', fecha: 'Abril – junio 2025', texto: 'Muro divisor, entradas del primer piso, rejillas, bordes de caño y parqueos demarcados.' },
+  { estado: 'completado', titulo: 'Verjas y portones', fecha: 'Febrero – abril 2025', texto: 'Soldadura y pintura anticorrosiva en verjas, baranda de la caseta y portones de acceso.' },
+  { estado: 'completado', titulo: 'Sonómetro para quejas de ruido', fecha: 'Marzo 2025', texto: 'Equipo para medir de forma objetiva las quejas de ruido.' },
 ];
 
 export const fotosTechos = [

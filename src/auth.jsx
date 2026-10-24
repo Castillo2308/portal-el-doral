@@ -9,7 +9,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
  */
 
 export const FILIALES = [];
-for (let n = 1; n <= 30; n++) for (const l of ['A', 'B']) FILIALES.push(`${n}${l}`);
+for (let n = 1; n <= 31; n++) for (const l of ['A', 'B']) FILIALES.push(`${n}${l}`);
 
 const KEY = 'eldoral.sesion';
 const enc = new TextEncoder();
