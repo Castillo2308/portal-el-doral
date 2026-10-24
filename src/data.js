@@ -9,7 +9,7 @@ const img = (f) => import.meta.env.BASE_URL + 'img/' + f;
  * Sus datos para el pie de página. Mientras un campo esté vacío ('') no se muestra.
  */
 export const autor = {
-  nombre: 'Ronny Castillo Gazel',
+  nombre: 'Ronny Castillo Mora',
   cargo: '',
   telefono: '+506 8851-3444',
   correo: 'roncama7@gmail.com',
