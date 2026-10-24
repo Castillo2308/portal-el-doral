@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { BrowserRouter, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom';
 import {
   ArrowRight, Check, Menu, X, Mail, MessageCircle, ClipboardList, Users, Trees, ShieldCheck, Cctv, Building2,
   TentTree, Car, Bike, Accessibility, Recycle, Trash2, VolumeX, PawPrint, DoorOpen, House, Megaphone, Plus,
-  ImageIcon, Phone, ChevronRight,
+  ImageIcon, Phone, ChevronRight, BarChart3,
 } from 'lucide-react';
+
+// Los gráficos solo se descargan al abrir Finanzas
+const Finanzas = lazy(() => import('./Finanzas.jsx'));
 import { autor, fotos, condominio, pilares, instalaciones, normas, mejoras, fotosTechos } from './data.js';
 
 const ICONS = {
@@ -16,20 +20,20 @@ const Icon = ({ name, size = 22 }) => {
 };
 
 const NAV = [
-  ['#condominio', 'El condominio'],
-  ['#instalaciones', 'Instalaciones'],
-  ['#normas', 'Convivencia'],
-  ['#mejoras', 'Mejoras'],
+  ['/condominio', 'El condominio'],
+  ['/convivencia', 'Convivencia'],
+  ['/mejoras', 'Mejoras'],
+  ['/finanzas', 'Finanzas'],
 ];
 
 function Logo() {
   return (
-    <a href="#inicio" className="logo" aria-label="El Doral, ir al inicio">
+    <Link to="/" className="logo" aria-label="El Doral, ir al inicio">
       <span className="logo__name">El Doral</span>
       <svg viewBox="0 0 40 36" className="logo__mark" aria-hidden="true">
         <path d="M3 18 20 3l17 15M8 14v19h24V14" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-    </a>
+    </Link>
   );
 }
 
@@ -46,6 +50,8 @@ function Photo({ src, label, className = '' }) {
 function Header() {
   const [open, setOpen] = useState(false);
   const panel = useRef(null);
+  const { pathname } = useLocation();
+  useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -62,11 +68,11 @@ function Header() {
       <div className="wrap top__inner">
         <Logo />
         <nav className="top__nav" aria-label="Secciones">
-          {NAV.map(([h, l]) => <a key={h} href={h}>{l}</a>)}
+          {NAV.map(([h, l]) => <NavLink key={h} to={h}>{l}</NavLink>)}
         </nav>
         <div className="top__actions">
           <a className="pill pill--line" href={condominio.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a className="pill pill--solid" href="#contacto">Contactar</a>
+          <Link className="pill pill--solid" to="/contacto">Contactar</Link>
         </div>
         <button className="top__menu" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(true)}>
           <Menu size={22} aria-hidden="true" /><span className="sr-only">Abrir menú</span>
@@ -82,8 +88,8 @@ function Header() {
             <button className="sheet__close" onClick={() => setOpen(false)}><X size={20} aria-hidden="true" /><span className="sr-only">Cerrar menú</span></button>
           </div>
           <nav aria-label="Secciones" className="sheet__nav">
-            {[...NAV, ['#contacto', 'Contacto']].map(([h, l]) => (
-              <a key={h} href={h} onClick={() => setOpen(false)}>{l}<ChevronRight size={18} aria-hidden="true" /></a>
+            {[['/', 'Inicio'], ...NAV, ['/contacto', 'Contacto']].map(([h, l]) => (
+              <NavLink key={h} to={h} end={h === '/'}>{l}<ChevronRight size={18} aria-hidden="true" /></NavLink>
             ))}
           </nav>
           <div className="sheet__foot">
@@ -105,11 +111,11 @@ function Hero() {
           <h1 id="hero-t" className="hero__title">Tu hogar,<br />en <em>comunidad.</em></h1>
           <p className="hero__lead">Normas, mejoras y canales oficiales de El Doral, en un solo lugar.</p>
           <div className="hero__actions">
-            <a className="pill pill--solid pill--lg" href="#condominio">Conoce El Doral <ArrowRight size={18} aria-hidden="true" /></a>
-            <a className="play" href="#normas">
+            <Link className="pill pill--solid pill--lg" to="/condominio">Conoce El Doral <ArrowRight size={18} aria-hidden="true" /></Link>
+            <Link className="play" to="/convivencia">
               <span className="play__ring"><ChevronRight size={18} aria-hidden="true" /></span>
               Ver las normas
-            </a>
+            </Link>
           </div>
         </div>
         <div className="hero__media">
@@ -134,12 +140,12 @@ function Hero() {
   );
 }
 
-function Pilares() {
+function Pilares({ level: H = 'h2' }) {
   return (
     <section id="condominio" className="section" aria-labelledby="pil-t">
       <div className="wrap">
         <div className="split-head">
-          <h2 id="pil-t" className="title">Menos trámites. <em>Más vida.</em></h2>
+          <H id="pil-t" className="title">Menos trámites. <em>Más vida.</em></H>
           <p className="split-head__text">{condominio.filiales} filiales en {condominio.bloques} bloques, en {condominio.ubicacion}, con áreas comunes cuidadas y una administración que informa a tiempo.</p>
         </div>
         <ul className="pillars">
@@ -181,14 +187,14 @@ function Instalaciones() {
   );
 }
 
-function Normas() {
+function Normas({ level: H = 'h2' }) {
   const [open, setOpen] = useState(null);
   return (
     <section id="normas" className="section" aria-labelledby="nor-t">
       <div className="wrap norms">
         <div className="norms__intro">
           <p className="eyebrow">Convivencia</p>
-          <h2 id="nor-t" className="title">Reglas claras, <em>vecinos tranquilos.</em></h2>
+          <H id="nor-t" className="title">Reglas claras, <em>vecinos tranquilos.</em></H>
           <p className="muted">Un resumen de cada norma vigente. El documento completo se solicita a la Administración por los canales oficiales.</p>
           <a className="pill pill--line" href={`mailto:${condominio.correo}?subject=${encodeURIComponent('Solicitud de las normas de convivencia')}`}>Solicitar el documento completo</a>
         </div>
@@ -214,14 +220,14 @@ function Normas() {
   );
 }
 
-function Mejoras() {
+function Mejoras({ level: H = 'h2' }) {
   return (
     <section id="mejoras" className="section section--soft" aria-labelledby="mej-t">
       <div className="wrap">
         <div className="split-head">
           <div>
             <p className="eyebrow">Mejoras</p>
-            <h2 id="mej-t" className="title">Un condominio <em>que se cuida.</em></h2>
+            <H id="mej-t" className="title">Un condominio <em>que se cuida.</em></H>
           </div>
           <p className="split-head__text">Obras terminadas y en curso para mantener la infraestructura, la seguridad y el aspecto de El Doral.</p>
         </div>
@@ -247,7 +253,7 @@ function Mejoras() {
   );
 }
 
-function Contacto() {
+function Contacto({ level: H = 'h2' }) {
   const canales = [
     { href: `mailto:${condominio.correo}`, I: Mail, label: 'Correo', value: condominio.correo },
     { href: condominio.whatsappLink, I: MessageCircle, label: 'WhatsApp', value: condominio.whatsapp, ext: true },
@@ -257,8 +263,8 @@ function Contacto() {
       <div className="wrap contact__inner">
         <div>
           <p className="eyebrow eyebrow--light">Canales oficiales</p>
-          <h2 id="con-t" className="title title--light">¿Necesita algo? <em>Escríbanos.</em></h2>
-          <p className="contact__text">Use estos canales para que su solicitud quede registrada y tenga seguimiento. Administración a cargo de {condominio.empresa}</p>
+          <H id="con-t" className="title title--light">¿Necesita algo? <em>Escríbanos.</em></H>
+          <p className="contact__text">Use estos canales para que su solicitud quede registrada y tenga seguimiento.</p>
         </div>
         <ul className="contact__list">
           {canales.map(({ href, I, label, value, ext }) => (
@@ -301,27 +307,137 @@ function Footer() {
           </div>
         )}
         <nav className="footer__nav" aria-label="Secciones">
-          {[...NAV, ['#contacto', 'Contacto']].map(([h, l]) => <a key={h} href={h}>{l}</a>)}
+          {[['/', 'Inicio'], ...NAV, ['/contacto', 'Contacto']].map(([h, l]) => <Link key={h} to={h}>{l}</Link>)}
         </nav>
       </div>
     </footer>
   );
 }
 
-export default function App() {
+/* ---------- Páginas ---------- */
+
+function usePageTitle(t) {
+  useEffect(() => { document.title = t ? `${t} — El Doral` : 'El Doral — Condominio Residencial en Zapote'; }, [t]);
+}
+
+function Crumbs({ label }) {
+  return (
+    <nav className="wrap crumbs" aria-label="Ruta de navegación">
+      <Link to="/">Inicio</Link><span aria-hidden="true">/</span><span aria-current="page">{label}</span>
+    </nav>
+  );
+}
+
+const EXPLORA = [
+  { to: '/condominio', I: Building2, t: 'El condominio', d: 'Administración, residentes, áreas comunes e instalaciones.' },
+  { to: '/convivencia', I: Users, t: 'Convivencia', d: 'Las normas vigentes: basura, ruido, mascotas, visitas y más.' },
+  { to: '/mejoras', I: Check, t: 'Mejoras', d: 'Obras terminadas y en curso, con fotos del antes y después.' },
+  { to: '/finanzas', I: BarChart3, t: 'Finanzas', d: 'Ingresos y gastos en gráficos, por rubro y mes a mes.' },
+];
+
+function Inicio() {
+  usePageTitle('');
   return (
     <>
+      <Hero />
+      <section className="section" aria-labelledby="exp-t">
+        <div className="wrap">
+          <div className="split-head">
+            <h2 id="exp-t" className="title">Todo El Doral, <em>en un solo lugar.</em></h2>
+            <p className="split-head__text">Elija qué quiere consultar. La información se actualiza cada mes.</p>
+          </div>
+          <ul className="explore">
+            {EXPLORA.map(({ to, I, t, d }) => (
+              <li key={to}>
+                <Link to={to} className="explore__card">
+                  <span className="circle"><I size={22} strokeWidth={1.6} aria-hidden="true" /></span>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                  <span className="explore__go">Ver {t.toLowerCase()} <ArrowRight size={16} aria-hidden="true" /></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <Contacto />
+    </>
+  );
+}
+
+function PaginaCondominio() {
+  usePageTitle('El condominio');
+  return <><Crumbs label="El condominio" /><Pilares level="h1" /><Instalaciones /></>;
+}
+function PaginaConvivencia() {
+  usePageTitle('Convivencia');
+  return <><Crumbs label="Convivencia" /><Normas level="h1" /></>;
+}
+function PaginaMejoras() {
+  usePageTitle('Mejoras');
+  return <><Crumbs label="Mejoras" /><Mejoras level="h1" /></>;
+}
+function PaginaContacto() {
+  usePageTitle('Contacto');
+  return <><Crumbs label="Contacto" /><Contacto level="h1" /></>;
+}
+function PaginaFinanzas() {
+  usePageTitle('Finanzas');
+  return (
+    <>
+      <Crumbs label="Finanzas" />
+      <section className="section section--fin" aria-labelledby="fin-t">
+        <div className="wrap">
+          <div className="split-head">
+            <div>
+              <p className="eyebrow">Finanzas</p>
+              <h1 id="fin-t" className="title">Las cuentas, <em>claras.</em></h1>
+            </div>
+            <p className="split-head__text">Cuánto entra, cuánto sale y en qué se usa cada colón: electricidad, agua, seguridad, administración y más.</p>
+          </div>
+          <Suspense fallback={<div className="loading" role="status"><span className="sr-only">Cargando…</span></div>}>
+            <Finanzas />
+          </Suspense>
+        </div>
+      </section>
+    </>
+  );
+}
+function NoEncontrada() {
+  usePageTitle('Página no encontrada');
+  return (
+    <section className="section"><div className="wrap">
+      <h1 className="title">Esta página <em>no existe.</em></h1>
+      <p className="muted" style={{ margin: '20px 0 28px' }}>Puede que el enlace esté incompleto.</p>
+      <Link className="pill pill--solid" to="/">Ir al inicio</Link>
+    </div></section>
+  );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+      <ScrollToTop />
       <a className="skip" href="#contenido">Saltar al contenido</a>
       <Header />
       <main id="contenido">
-        <Hero />
-        <Pilares />
-        <Instalaciones />
-        <Normas />
-        <Mejoras />
-        <Contacto />
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/condominio" element={<PaginaCondominio />} />
+          <Route path="/convivencia" element={<PaginaConvivencia />} />
+          <Route path="/mejoras" element={<PaginaMejoras />} />
+          <Route path="/finanzas" element={<PaginaFinanzas />} />
+          <Route path="/contacto" element={<PaginaContacto />} />
+          <Route path="*" element={<NoEncontrada />} />
+        </Routes>
       </main>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }

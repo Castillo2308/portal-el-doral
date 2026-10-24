@@ -32,14 +32,13 @@ export const condominio = {
   ubicacion: 'Zapote, San José, Costa Rica',
   filiales: 62,
   bloques: 3,
-  empresa: 'CMD S.A.',
-  correo: 'condominioeldoral@ciemedcr.com',
-  whatsapp: '+506 8684-4010',
-  whatsappLink: 'https://wa.me/50686844010',
+  correo: 'roncama7@gmail.com',
+  whatsapp: '+506 8851-3444',
+  whatsappLink: 'https://wa.me/50688513444',
 };
 
 export const pilares = [
-  { icon: 'ClipboardList', titulo: 'Administración', bajada: 'Todo en orden, con reglas claras.', texto: 'Portería, mantenimiento, lectura de medidores y comunicados oficiales, coordinados por CMD S.A. cada mes.', foto: 'administracion' },
+  { icon: 'ClipboardList', titulo: 'Administración', bajada: 'Todo en orden, con reglas claras.', texto: 'Portería, mantenimiento, lectura de medidores y comunicados oficiales, coordinados cada mes.', foto: 'administracion' },
   { icon: 'Users', titulo: 'Residentes', bajada: 'Una comunidad que se respeta.', texto: 'Normas de convivencia conocidas por todos: visitas, entregas, mascotas, ruido y uso de las áreas comunes.', foto: 'residentes' },
   { icon: 'Trees', titulo: 'Áreas comunes', bajada: 'Espacios cuidados para disfrutar.', texto: 'Jardines con mantenimiento mensual, kiosco con columpios, parqueos demarcados y reciclaje junto a portería.', foto: 'areasComunes' },
 ];
@@ -79,3 +78,29 @@ export const fotosTechos = [
   { src: img('techo-antes.jpg'), etiqueta: 'Antes' },
   { src: img('techo-despues.jpg'), etiqueta: 'Después' },
 ];
+
+/*
+ * FINANZAS — por ahora todo en 0.
+ * Cada lista tiene 12 montos en colones (enero a diciembre), sin puntos ni símbolo.
+ * Al cerrar un mes, reemplace el 0 de ese mes por el monto real.
+ */
+export const finanzas = {
+  anio: 2026,
+  meses: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
+  fondoReserva: 0,
+  ingresos: [
+    { id: 'cuotas', nombre: 'Cuotas de mantenimiento', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'otros', nombre: 'Otros ingresos', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  ],
+  gastos: [
+    { id: 'luz', nombre: 'Electricidad', icon: 'Zap', color: '#e0a03a', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'agua', nombre: 'Agua', icon: 'Droplets', color: '#3b82a6', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'seguridad', nombre: 'Seguridad y portería', icon: 'ShieldCheck', color: '#5b4b8a', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'administracion', nombre: 'Administración', icon: 'ClipboardList', color: '#c24a35', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'jardineria', nombre: 'Jardinería', icon: 'Trees', color: '#4f8a5b', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'mantenimiento', nombre: 'Mantenimiento y reparaciones', icon: 'Wrench', color: '#8c6a4f', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'limpieza', nombre: 'Limpieza', icon: 'Sparkles', color: '#2f8f8a', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'comunicaciones', nombre: 'Internet y teléfono', icon: 'Wifi', color: '#9a6fb0', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+    { id: 'otros', nombre: 'Otros gastos', icon: 'Package', color: '#a39b94', montos: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  ],
+};

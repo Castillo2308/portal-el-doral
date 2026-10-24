@@ -1,6 +1,13 @@
 # El Doral — Condominio Residencial
 
-Sitio de una página en React + Vite. Todo el contenido se edita en **`src/data.js`**.
+Sitio en React + Vite con varias páginas: Inicio, El condominio, Convivencia, Mejoras, Finanzas y Contacto.
+Todo el contenido se edita en **`src/data.js`**.
+
+## Finanzas
+
+En `src/data.js`, dentro de `finanzas`, cada rubro (electricidad, agua, seguridad, administración, jardinería,
+mantenimiento, limpieza, internet y teléfono, otros) y cada ingreso tiene 12 montos, de enero a diciembre.
+Hoy están todos en 0. Al cerrar un mes se reemplaza el 0 de ese mes; los gráficos y totales se calculan solos.
 
 Sitio en vivo: https://castillo2308.github.io/portal-el-doral/
 Cada `git push` a `main` lo vuelve a publicar solo (`.github/workflows/deploy.yml`).
